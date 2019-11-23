@@ -40,6 +40,7 @@ duration:number;
 currentTime:number;
 
 showVolumnPanel=false;
+showPanel=false;
 volume=60
 //播放状态
 playing=false;
@@ -115,7 +116,6 @@ private audioEl: HTMLAudioElement;
 private updateCurrentIndex(list:Song[],song:Song){
   const newIndex=list.findIndex(item=>item.id===song.id);
   this.store$.dispatch(setCurrentIndex({currentIndex:newIndex}));
-
 }
     private watchCurrentSong(song: Song) {
       if(song){
@@ -128,14 +128,17 @@ private updateCurrentIndex(list:Song[],song:Song){
     get picUrl():string{
       return this.currentSong?this.currentSong.al.picUrl:'//s4.music.126.net/style/web2/img/default/default_album.jpg'
     }
-    toggleVolumnStrip(evt:MouseEvent){
-
-      evt.stopPropagation();
-      this.showVolumnStrip();
+    toggleVolumnStrip(){    
+      this.showVolumnStrip("showVolumPanel");
     }
-    private showVolumnStrip(){
-      this.showVolumnPanel=!this.showVolumnPanel;
-      if(this.showVolumnPanel)
+toggleListPanel(){
+  if(this.songList){
+    this.showVolumnStrip("showPanel");
+  }
+}
+    private showVolumnStrip(type:string){
+      this[type]=!this[type];
+      if(this.showVolumnPanel||this.showPanel)
       {
         this.bindDocumentClickListener();
       }
@@ -148,6 +151,7 @@ private updateCurrentIndex(list:Song[],song:Song){
         this.winClick=fromEvent(this.doc,'click').subscribe(()=>{
           if(!this.selfClick){//说明点击了播放器以外的部分
 this.showVolumnPanel=false;
+this.showPanel=false;
 this.unbindDocumentClickListener();
           }
           this.selfClick=false;
@@ -229,6 +233,7 @@ this.unbindDocumentClickListener();
   
   }
 
+
   private updateIndex(index:number){
     this.store$.dispatch(setCurrentIndex({currentIndex:index}))
     this.songReady=false;
@@ -256,6 +261,10 @@ onEnded(){
   else{
     this.onNext(this.currentIndex+1);
   }
+}
+onChangeSong(song:Song){
+this.updateCurrentIndex(this.playList,this.currentSong);
+
 }
 
 }
