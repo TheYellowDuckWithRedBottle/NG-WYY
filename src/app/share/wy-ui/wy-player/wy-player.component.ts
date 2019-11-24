@@ -58,7 +58,7 @@ private audioEl: HTMLAudioElement;
 
   constructor(private store$:Store<AppStoreModule>,
     @Inject(DOCUMENT) private doc:Document) { 
-    console.log(store$);
+    
     const appStore$=this.store$.pipe(select('player'));
  
     const stateArr = [{
@@ -81,29 +81,22 @@ private audioEl: HTMLAudioElement;
     appStore$.pipe(select(item.type)).subscribe(item.cb);
   })
     this.store$.pipe(select('player'),select(getSongList)).subscribe(list=>{
-      console.log('what happend')
-      console.log('getSongList:',list);
     })
      this.store$.pipe(select('player'),select(getPlayList)).subscribe(list=>{
-       console.log('getPlayList',list);
      })
-    // this.store$.pipe(select(getCurrentIndex)).subscribe(index=>{
-    //   console.log('getCurrentList',index);
-    // })
+   
   }
   private watchList(list: Song[], type: string) {
     this[type] = list;
-    console.log(this[type]);
+   
   }
 
   private watchCurrentIndex(index: number) {
     this.currentIndex = index;
-    console.log(this.currentIndex);
   }
 
   private watchPlayMode(mode: PlayMode) {
     this.currentMode = mode;
-    console.log(this.currentMode);
     if(this.songList){
       let list=this.songList.slice();
       if(mode.type=='random'){
@@ -121,7 +114,6 @@ private updateCurrentIndex(list:Song[],song:Song){
       if(song){
         this.currentSong = song;
         this.duration=song.dt/1000;
-        console.log(this.currentSong);
       }
       
     }
@@ -248,7 +240,6 @@ private loop(){
 }
 //改变模式
 changeMode(){
-  console.log('i am change');
 const temp=modeTypes[++this.modeCount%3];
 this.store$.dispatch(setPlayMode({playMode:temp}))
 
@@ -263,7 +254,7 @@ onEnded(){
   }
 }
 onChangeSong(song:Song){
-this.updateCurrentIndex(this.playList,this.currentSong);
+this.updateCurrentIndex(this.playList,song);
 
 }
 
