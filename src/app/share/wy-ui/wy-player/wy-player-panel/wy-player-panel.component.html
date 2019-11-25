@@ -16,7 +16,7 @@
   <div class="bd">
     <img src="" class="imgbg">
     <div class="msk"></div>
-   <app-wy-scroll class="list-wrap" [data]="songList">
+   <app-wy-scroll class="list-wrap" [data]="songList" (onScrollEnd)="scrollY=$event">
         <ul>
             <li *ngFor="let item of songList;index as i" [class.current]="currentIndex===i" (click)="onChangeSong.emit(item)">
               <i class="col arrow" > </i>
