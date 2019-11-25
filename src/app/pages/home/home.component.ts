@@ -20,9 +20,12 @@ import {
   NzCarouselComponent
 } from 'ng-zorro-antd';
 import { SheetService } from 'src/app/services/sheet.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppStoreModule } from 'src/app/store';
 import { setSongList, setPlayList, setCurrentIndex } from 'src/app/store/acitions/play.action';
+import { PlayState } from 'src/app/store/reducers/player.reducer';
+
+import { shuffle, findIndex } from 'src/app/utils/array';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,6 +39,7 @@ export class HomeComponent implements OnInit {
   songSheet: SongSheet[];
   singers: Singer[];
   songList:Song[];
+  private playState:PlayState;
   @ViewChild(NzCarouselComponent, {
     static: true
   }) nzCarousel: any;
@@ -49,7 +53,7 @@ export class HomeComponent implements OnInit {
     this.getHotTags();
     this.getSongSheets();
     this.getEnterSinger();
-    
+    this.store$.pipe(select('player')).subscribe(res=>this.playState=res)
   }
   private getEnterSinger() {
     this.singerServe.getEnterSinger().subscribe(singers1 => {
@@ -91,8 +95,14 @@ export class HomeComponent implements OnInit {
     this.sheeetServe.playSheet(id).subscribe(list=>{
       console.log(list);
       this.store$.dispatch(setSongList({songList:list}));
-      this.store$.dispatch(setPlayList({playList:list}));
-      this.store$.dispatch(setCurrentIndex({currentIndex:0}));
+      let trueIndex=0;
+      let trueList=list.slice();
+if(this.playState.playMode.type=="random"){
+  trueList=shuffle(list||[]);
+  trueIndex=findIndex(trueList,list[trueIndex]);
+}
+      this.store$.dispatch(setPlayList({playList:trueList}));
+      this.store$.dispatch(setCurrentIndex({currentIndex:trueIndex}));
     });
   }
 

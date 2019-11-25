@@ -5,9 +5,10 @@ import { getSongList, getPlayList, getCurrentIndex, getPlayMode, getCurrentSong 
 import { Song } from 'src/app/services/data-types/common.type';
 import { PlayMode } from './player-type';
 import { setCurrentIndex, setPlayMode, setPlayList } from 'src/app/store/acitions/play.action';
-import { shuffle } from 'src/app/utils/array';
+import { shuffle, findIndex } from 'src/app/utils/array';
 import { Subscription, fromEvent } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+
 
 const modeTypes:PlayMode[]=[{
   type:'loop',
@@ -107,7 +108,8 @@ private audioEl: HTMLAudioElement;
     }
   }
 private updateCurrentIndex(list:Song[],song:Song){
-  const newIndex=list.findIndex(item=>item.id===song.id);
+  
+  const newIndex=findIndex(list,song);
   this.store$.dispatch(setCurrentIndex({currentIndex:newIndex}));
 }
     private watchCurrentSong(song: Song) {

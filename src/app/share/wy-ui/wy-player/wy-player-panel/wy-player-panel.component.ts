@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitte
 import { Song } from 'src/app/services/data-types/common.type';
 import { WyScrollComponent } from '../wy-scroll/wy-scroll.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { findIndex } from 'src/app/utils/array';
+
 
 
 @Component({
@@ -12,7 +14,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class WyPlayerPanelComponent implements OnInit,OnChanges {
  @Input() show=false;
 @Input() songList:Song[]
-@Input() currentIndex:number
+ currentIndex:number
 @Input() currentSong:Song
 @Output() onClose=new EventEmitter<void>();
 @Output() onChangeSong=new EventEmitter<Song>();
@@ -42,6 +44,7 @@ scrollY=0;
     if(changes["currentSong"])
     {
       if(this.currentSong){
+        this.currentIndex=findIndex(this.songList,this.currentSong)
         if(this.show){
           this.scrollToCurrent();
         }
