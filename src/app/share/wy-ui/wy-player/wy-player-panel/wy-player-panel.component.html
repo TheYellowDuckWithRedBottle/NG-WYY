@@ -40,7 +40,7 @@
           </ul>
         </app-wy-scroll>
     <app-wy-scroll class="list-lyric">
-      <ul *ngFor="let item of currentLyric">
+      <ul *ngFor="let item of currentLyric;index as i" [class.current]="currentLineNum===i">
       <li>
         {{item.txt}}<br/>{{item.txtCn}}
       </li>

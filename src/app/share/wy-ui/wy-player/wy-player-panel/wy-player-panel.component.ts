@@ -18,18 +18,28 @@ import { WyLyric, BaseLyricLine } from './wy-lyric';
 export class WyPlayerPanelComponent implements OnInit,OnChanges {
  @Input() show=false;
 @Input() songList:Song[]
+@Input() playing:boolean;
  currentIndex:number
 @Input() currentSong:Song
 @Output() onClose=new EventEmitter<void>();
 @Output() onChangeSong=new EventEmitter<Song>();
+currentLineNum:number;
 scrollY=0;
 currentLyric:BaseLyricLine[];
+
+private lyric;
 @ViewChildren(WyScrollComponent) private wyScroll:QueryList<WyScrollComponent>;
   constructor(@Inject(WINDOW) private win:Window,private songService:SongService ) { }
 
   ngOnInit() {
   }
   ngOnChanges(changes:SimpleChanges): void {
+    if(changes['playing']){
+      if(!changes['playing'].firstChange){
+        this.lyric&&this.lyric.togglePlay(this.playing);
+      }
+    }
+
     if(changes["songList"]){
       console.log(this.songList);
     }
@@ -38,6 +48,7 @@ currentLyric:BaseLyricLine[];
       if(!changes['show'].firstChange&&this.show)
       {
         this.wyScroll.first.refreshScroll();
+        console.log(this.wyScroll);
         this.wyScroll.last.refreshScroll();
         timer(80).subscribe(()=>{
           this.scrollToCurrent();
@@ -82,13 +93,24 @@ currentLyric:BaseLyricLine[];
   }
   private updateLyric(){
   this.songService.getLyric(this.currentSong.id).subscribe(res=>{
-    console.log('res',res);
-    const lyric=new WyLyric(res);
-    this.currentLyric=lyric.lines;
-    console.log("currentLyric",this.currentLyric);
+     this.lyric=new WyLyric(res);
+    this.currentLyric=this.lyric.lines;
+   
+    this.handleLyric();
+    this.wyScroll.last.scrollTo(0,0);//每次切歌到最上面
+    if(this.playing){//如果正在播放，歌词也要播放
+      this.lyric.play();
 
+    }
   });
    
   }
+  private handleLyric(){
+    this.lyric.handler.subscribe(({lineNum})=>{
+      console.log('lineNum',lineNum);
+      this.currentLineNum=lineNum;
+    })
+  }
+ 
 
 }

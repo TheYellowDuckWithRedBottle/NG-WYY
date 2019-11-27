@@ -24,7 +24,7 @@ export class WyScrollComponent implements OnInit,AfterViewInit,OnChanges {
 
 @Input() data:any[];
 
-  constructor(readonly el:ElementRef,@Inject(WINDOW) private win:Window) { }
+constructor(readonly el:ElementRef) { }
 
   ngOnInit() {
   }
@@ -33,8 +33,7 @@ export class WyScrollComponent implements OnInit,AfterViewInit,OnChanges {
       scrollbar:{
       interactive:true
     },mouseWheel:{}
-          }
-    );
+    });
     this.bs.on('scrollEnd',({y})=>this.onScrollEnd.emit(y))
   }
   private refresh(){
@@ -49,8 +48,11 @@ export class WyScrollComponent implements OnInit,AfterViewInit,OnChanges {
   scrollToElement(...args){
     this.bs.scrollToElement.apply(this.bs,args);
   }
+  scrollTo(...args){
+    this.bs.scrollTo.apply(this.bs,args);
+  }
   ngOnChanges(changes:SimpleChanges): void {
-    if(changes['data']){
+    if(changes.data){
       this.refreshScroll()
     }
   }
