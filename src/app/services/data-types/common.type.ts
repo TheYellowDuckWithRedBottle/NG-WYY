@@ -40,3 +40,8 @@ export interface Lyric {
     lyric: string;
     tlyric: string;
   }
+
+export type SheetList={
+    playlist:SongSheet[];
+    total:number;
+}

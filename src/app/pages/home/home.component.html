@@ -21,8 +21,8 @@
                 <i></i>
                 <a>热门推荐</a>
               </h2>
-              <nav *ngFor="let item of hotTags">
-                <a>{{item.name}}</a>
+              <nav >
+                <a *ngFor="let item of hotTags" routerLink="/sheet" [queryParams]="{cat:item.name}">{{item.name}}</a>
               </nav>
             </div>
             <a>
