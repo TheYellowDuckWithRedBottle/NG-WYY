@@ -32,7 +32,11 @@
           </div>
           <div class="down">
             <div class="down-wrap">
-              <app-single-sheet class="sheet-item" *ngFor="let item of songSheet" [sheet]=item (onPlay)="onPlaySheet($event)"></app-single-sheet>
+              <app-single-sheet class="sheet-item" 
+              *ngFor="let item of songSheet" 
+              [sheet]=item 
+              (onPlay)="onPlaySheet($event)">
+            </app-single-sheet>
             </div>
           </div>
 

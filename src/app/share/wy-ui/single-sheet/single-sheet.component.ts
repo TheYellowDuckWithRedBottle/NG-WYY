@@ -18,4 +18,10 @@ export class SingleSheetComponent implements OnInit {
     this.onPlay.emit(id);
     console.log(id);
   }
+  get coverImage():string{
+    console.log("woyao",this.sheet);
+    
+    return this.sheet.picUrl||this.sheet.coverImgUrl;
+    
+  }
 }

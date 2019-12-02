@@ -6,7 +6,7 @@ import { SheetList } from 'src/app/services/data-types/common.type';
 @Component({
   selector: 'app-sheet-list',
   templateUrl: './sheet-list.component.html',
-  styles: []
+  styleUrls:['./sheet-list.component.less']
 })
 export class SheetListComponent implements OnInit {
   sheets:SheetList
@@ -16,11 +16,11 @@ export class SheetListComponent implements OnInit {
     offset:1,
     limit:35
   }
+  orderValue:"hot";
   constructor(private route:ActivatedRoute,private sheetServe:SheetService) 
   {
 this.listParams.cat=this.route.snapshot.queryParamMap.get('cat')||'全部';
 this.getList();
-
    }
 
   ngOnInit() {
@@ -31,6 +31,9 @@ this.getList();
         this.sheets=res
       }
     );
+  }
+  onPlaySheet(){
+
   }
 
 }
