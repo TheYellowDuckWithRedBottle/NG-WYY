@@ -26,6 +26,7 @@ import { setSongList, setPlayList, setCurrentIndex } from 'src/app/store/acition
 import { PlayState } from 'src/app/store/reducers/player.reducer';
 
 import { shuffle, findIndex } from 'src/app/utils/array';
+import { RouterModule, Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
     static: true
   }) nzCarousel: any;
   constructor(
+    private router:Router,
     private homeServe: HomeService,
     private singerServe: SingerService,
     private sheeetServe:SheetService,
@@ -105,5 +107,7 @@ if(this.playState.playMode.type=="random"){
       this.store$.dispatch(setCurrentIndex({currentIndex:trueIndex}));
     });
   }
-
+toInfo(id:number){
+  this.router.navigate(['/sheetInfo',id]);
+}
 }

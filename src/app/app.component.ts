@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Ng-WYY';
+  menu=[
+    {
+label:'发现',
+path:'/home'
+    },
+    {
+      label:'歌单',
+      path:'/sheet'
+
+    }
+  ]
 }

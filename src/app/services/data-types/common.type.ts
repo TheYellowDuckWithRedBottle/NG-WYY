@@ -31,6 +31,8 @@ export type SongSheet={
     name:string;
     playCount:number;
     tracks:Song[];
+    tags:string[];
+    createTime:number;
     
 }
 export type SongUrl={

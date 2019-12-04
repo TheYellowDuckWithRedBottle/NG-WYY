@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SheetParams, SheetService } from 'src/app/services/sheet.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SheetList } from 'src/app/services/data-types/common.type';
 import { setSongList, setPlayList, setCurrentIndex } from 'src/app/store/acitions/play.action';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,10 @@ export class SheetListComponent implements OnInit {
     limit:35
   }
   orderValue:"hot";
-  constructor(private route:ActivatedRoute,private sheetServe:SheetService,private store$:Store<AppStoreModule>) 
+  constructor(private route:ActivatedRoute,
+    private router:Router,
+    private sheetServe:SheetService,
+    private store$:Store<AppStoreModule>) 
   {
 this.listParams.cat=this.route.snapshot.queryParamMap.get('cat')||'全部';
 this.getList();
@@ -64,5 +67,8 @@ if(this.playState.playMode.type=="random"){
     this.listParams.offset=page;
     this.getList();
   }
+  toInfo(id:number){
 
+    this.router.navigate(['/sheetInfo',id]);
+  }
 }
