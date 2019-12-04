@@ -32,6 +32,12 @@ export type SongSheet={
     playCount:number;
     tracks:Song[];
     tags:string[];
+    description:string;
+    subscribedCount:number;
+    shareCount:number;
+    commentCount:number;
+    subscribed:boolean;
+    creator:{nickname:string;avatarUrl:string;}
     createTime:number;
     
 }
