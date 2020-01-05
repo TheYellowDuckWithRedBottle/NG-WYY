@@ -11,14 +11,11 @@
           </ul>
         </div>
         <div class="right">
-          <div class="search">
-            <nz-input-group [nzSuffix]="suffixIconSearch">
-              <input type="text" nz-input [nzSize]="small"  placeholder="歌单/歌手/歌曲" />
-            </nz-input-group>
-            <ng-template #suffixIconSearch>
-              <i nz-icon type="search"></i>
-            </ng-template>
-          </div>
+          <app-wy-search [customView]="customView"></app-wy-search>
+          <ng-template #customView let-name>
+            <button>{{name}}</button>
+
+          </ng-template>
           <div class="member">
             <div class="no-login">
               <ul nz-menu nzTheme="dark" nzMode="horizontal">
