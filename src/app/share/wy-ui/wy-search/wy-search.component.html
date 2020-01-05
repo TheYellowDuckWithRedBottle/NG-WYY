@@ -2,10 +2,10 @@
   <ng-template #defultView>
     <div class="search">
         <nz-input-group nzSuffixIcon="search">
-          <input type="text" nz-input [nzSize]="small"  placeholder="歌单/歌手/歌曲" />
+          <input type="text" #nzInput nz-input [nzSize]="small"  placeholder="歌单/歌手/歌曲" />
         </nz-input-group>
         
       </div>
   </ng-template>
 
-  <ng-container *ngTemplateOutlet="customView?customView:defaultView;context:myContext"></ng-container>
+  <ng-container *ngTemplateOutlet="customView?customView:defultView;context:myContext"></ng-container>

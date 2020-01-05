@@ -54,3 +54,8 @@ export type SheetList={
     playlist:SongSheet[];
     total:number;
 }
+export type SearchResult={
+    artists?:Singer[];
+    playlists?:SongSheet[];
+    songs?:Song[];
+}

@@ -11,7 +11,7 @@
           </ul>
         </div>
         <div class="right">
-          <app-wy-search [customView]="customView"></app-wy-search>
+          <app-wy-search (onSearch)="onSearch($event)"></app-wy-search>
           <ng-template #customView let-name>
             <button>{{name}}</button>
 
