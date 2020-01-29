@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchService } from './services/search.service';
+import { SearchResult } from './services/data-types/common.type';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ path:'/home'
 
     }
   ];
+  searchResult:SearchResult;
   constructor(private searchServe:SearchService){
 
   }
@@ -27,8 +29,10 @@ path:'/home'
     if(keyword){
       this.searchServe.search(keyword).subscribe(res=>{
         console.log('res',res);
+        this.searchResult=res;
       })
     }
-    else{}
+
+    else{this.searchResult={};}
   }
 }

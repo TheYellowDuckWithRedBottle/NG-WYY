@@ -19,8 +19,6 @@ export class SingleSheetComponent implements OnInit {
     console.log(id);
   }
   get coverImage():string{
-    console.log("woyao",this.sheet);
-    
     return this.sheet.picUrl||this.sheet.coverImgUrl;
     
   }
