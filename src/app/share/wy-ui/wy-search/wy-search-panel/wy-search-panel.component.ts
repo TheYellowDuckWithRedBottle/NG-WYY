@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchResult } from 'src/app/services/data-types/common.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wy-search-panel',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wy-search-panel.component.less'],
 })
 export class WySearchPanelComponent implements OnInit {
-
-  constructor() { }
+searchResult:SearchResult
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+  toInfo(path:[string,number]){
+    console.log('toinfo');
+    if(path[1]){
+      this.router.navigate(path);
+    }
   }
 
 }
